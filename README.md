@@ -56,23 +56,23 @@ The steps to accomplish this are as follows. Please see screenshots in the 'code
 3. Add a stage to the POC pipeline that calls the classification model
 
 # Results
-Please refer to the images in the 'analysis' folder to see examples of the results returned by the two pipelines.
+Below is a summary of the comparison of the results from the default pipeline to the results from the pipeline calling the classification model.
 
 ## Search term '23uf'
-The regular pipeline returns 24 results, while the test pipeline returns 6 results. The top 17 results returned by the regular pipeline have '23uf' somewhere in the part number. Since when the test pipeline calls the classification model, it classifies '23uf' as a keyword search, it only searches the keyword fields, bringing back less results, but more relevant results.
+The default pipeline returns 24 results, while the classifier pipeline returns 6 results. The top 17 results returned by the default pipeline have '23uf' somewhere in the part number. Since when the classifier pipeline calls the classification model, it classifies '23uf' as a keyword search, it only searches the keyword fields, bringing back less results, but more relevant results.
 
 ## Search term '100cm'
-The regular pipeline returns 435 results, and the top 58 have '100cm' in the part number. The test pipeline brings back only 372 results, but the top results are more relevant since '100cm' was classified as a keyword and only the keyword fields were queried.
+The default pipeline returns 435 results, and the top 58 have '100cm' in the part number. The classifier pipeline brings back only 372 results, but the top results are more relevant since '100cm' was classified as a keyword and only the keyword fields were queried.
 
 ## Search term 'ddr5'
-The regular pipeline brings back 557 results. Even though the test pipeline classifies this search term as a part number, it brings back only 235 results, because it is querying only the part number fields.
+The default pipeline brings back 557 results. Even though the classifier pipeline classifies this search term as a part number, it brings back only 235 results, because it is querying only the part number fields.
 
 ## Search term 'mt10'
-The regular pipeline returns 2,277 results, while the test pipeline returns a similar count, 2,274. The test pipeline classified the search term as a part number, but since almost all of the results match on the part number fields, excluding the keyword fields from being queried does not affect the result count nearly as much.
+The default pipeline returns 2,277 results, while the classifier pipeline returns a similar count, 2,274. The classifier pipeline classified the search term as a part number, but since almost all of the results match on the part number fields, excluding the keyword fields from being queried does not affect the result count nearly as much.
 
 # Conclusions
-When the classification model classifies a search term as a keyword, we see less results returned by the test pipeline in comparison to the regular pipeline (the one not calling the classification model), but the results returned are more relevant. Since the part number fields are not being searched, there are no useless matches on the part number when the user is searching for an attribute value of a part. (Examples: '22uf', '23uf', '800v', '100cm', '200mm')
-However, when the classification model classifies a search term as a part number, we see one of two scenarios taking place. Sometimes the test pipeline (the one calling the classification model) returns much less results than the regular pipeline (Examples: 'ddr5', 'q200') because it's searching only the part number fields and missing the parts that match the search term in their keyword fields. Other times, the test pipeline brings back almost equal result counts to the regular pipeline (Examples: 'mt10', '3106') because the parts that match the search term happen to match only on their part number fields.
+When the classification model classifies a search term as a keyword, we see less results returned by the classifier pipeline in comparison to the default pipeline (the one not calling the classification model), but the results returned are more relevant. Since the part number fields are not being searched, there are no useless matches on the part number when the user is searching for an attribute value of a part. (Examples: '22uf', '23uf', '800v', '100cm', '200mm')
+However, when the classification model classifies a search term as a part number, we see one of two scenarios taking place. Sometimes the classifier pipeline (the one calling the classification model) returns much less results than the default pipeline (Examples: 'ddr5', 'q200') because it's searching only the part number fields and missing the parts that match the search term in their keyword fields. Other times, the classifier pipeline brings back almost equal result counts to the default pipeline (Examples: 'mt10', '3106') because the parts that match the search term happen to match only on their part number fields.
 Obviously the desired results will depend on the use case, but this project has shown that classiying a passed in search term can be used to produce more relevant results.
 
 # Contribute & Further Study
